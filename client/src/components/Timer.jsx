@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext} from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsContext from '../context/SettingsContext';
 
 function Timer() {
+    const context = useContext(SettingsContext);
+
     return (
         <div className="timer-container d-flex flex-column align-items-center">
             <CircularProgressbar value={60} text={`${60}%`} styles={buildStyles({
@@ -25,7 +28,7 @@ function Timer() {
             </div>
 
             <div className="settingsButton-container d-flex justify-content-center align-items-center p-1">
-                <SettingsIcon />
+                <SettingsIcon onClick= { () => context.setShowSettings(true)}/>
             </div>
         </div>
     );

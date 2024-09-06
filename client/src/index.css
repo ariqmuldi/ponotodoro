@@ -7,6 +7,7 @@
 :root {
     --red: #f54e4e;
     --green : #4aec8c;
+    --orange : #FF9874;
 }
 
 body {
@@ -15,11 +16,11 @@ body {
 }
 
 .main-container {
-    height: 100vh;
+    min-height: 100vh; /* height : 100vh */
 }
 
 .timer-container {
-    width : 250px;
+    width : 225px;
     height: auto; /* Let the height adjust based on content */
 }
 
@@ -32,7 +33,7 @@ body {
 }
 
 .buttons-container .MuiSvgIcon-root {
-    font-size: 50px; 
+    font-size: 40px; 
 }
 
 .settingsButton-container {
@@ -50,7 +51,7 @@ body {
 }
 
 .slider {
-    height : 40px;
+    height : 30px;
     border : 2px solid var(--red);
     border-radius : 20px;
     width: 50%;
@@ -59,9 +60,9 @@ body {
 
 .thumb {
     background-color: var(--red);
-    width : 40px;
+    width : 30px;
     cursor : pointer;
-    height : 40px;
+    height : 30px;
     border-radius : 50%;
     position: absolute;
     top: 50%; /* Position it in the middle of the slider track */
@@ -69,7 +70,7 @@ body {
 }
 
 .slider.green {
-    height : 40px;
+    height : 30px;
     border : 2px solid var(--green);
     border-radius : 20px;
     width: 50%;
@@ -78,9 +79,28 @@ body {
 
 .slider.green .thumb {
     background-color: var(--green);
-    width : 40px;
+    width : 30px;
     cursor : pointer;
-    height : 40px;
+    height : 30px;
+    border-radius : 50%;
+    position: absolute;
+    top: 50%; /* Position it in the middle of the slider track */
+    transform: translateY(-50%); /* Vertically center it */
+}
+
+.slider.orange {
+    height : 30px;
+    border : 2px solid var(--orange);
+    border-radius : 20px;
+    width: 50%;
+    position: relative;
+}
+
+.slider.orange .thumb {
+    background-color: var(--orange);
+    width : 30px;
+    cursor : pointer;
+    height : 30px;
     border-radius : 50%;
     position: absolute;
     top: 50%; /* Position it in the middle of the slider track */
