@@ -3,7 +3,7 @@ import cors from "cors"
 import env from 'dotenv'
 
 const app = express();
-env.config();
+env.config({ path: '../client/.env' });
 
 const corsOptions = { origin : [process.env.VITE_ADDRESS]} // Port Vite servers run on
 app.use(cors(corsOptions))

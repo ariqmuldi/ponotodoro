@@ -1,11 +1,15 @@
 import { useState, useEffect, useContext, useRef} from 'react'
 
-function Input() {
+function Input( {allInputs, setAllInputs} ) {
     const [inputValue, setInputValue] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setInputValue(""); // Reset the input value after submitting
+        if (inputValue.trim()) { // Check if the input is not empty or just whitespace
+            setAllInputs([...allInputs, inputValue]); // Create a new array and add the input value
+            console.log([...allInputs, inputValue]); // Log the updated array
+            setInputValue(""); // Reset the input value after submitting
+        }
     };
 
     return (
