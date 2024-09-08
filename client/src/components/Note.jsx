@@ -1,7 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 
 function Note(props) {
+    const [clickedItem, setClickedItem] = useState(null);
+
+    const handleItemClick = (index) => {
+        setClickedItem(index); 
+        setTimeout(() => {
+            props.onDel(index); 
+            setClickedItem(null);
+        }, 750);
+    };
+
     return (
         <div className="note col-12 d-flex flex-column justify-content-start text-center">
             <div 
@@ -18,7 +29,11 @@ function Note(props) {
                 
             </div>
             <div className="d-flex align-items-center justify-content-center" style={{ marginTop: 'auto' }}>
-                <DeleteIcon style={{ fontSize: '10px' }}/>
+                {clickedItem === props.id ? 
+                    <CheckCircleOutlinedIcon style={{ color: 'green', fontSize: '10px' }} /> // Green checkmark icon
+                    :
+                    <DeleteIcon style={{ fontSize: '10px' }} onClick={() => handleItemClick(props.id)} /> // Delete icon
+                }
             </div>
             
         </div>

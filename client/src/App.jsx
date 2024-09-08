@@ -35,6 +35,12 @@ function App() {
     });
 
   };
+  
+  function delNote(id) {
+    setListNotes((prev) => {
+      return prev.filter( (note, index) => {return index !== id} )
+    })
+  }
 
   useEffect(() => {
     if (listNotes) {
@@ -95,7 +101,7 @@ function App() {
                   {listNotes.map((notes, index) => {
                     return (
                       <div className="col-12 col-sm-6 col-md-4 d-flex justify-content-center" key={index}>
-                        <Note title={notes.title} content={notes.content} id={index} />
+                        <Note title={notes.title} content={notes.content} id={index} onDel={delNote} />
                       </div>
                     );
                   })}
