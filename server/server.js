@@ -9,7 +9,7 @@ import session from "express-session";
 const app = express();
 env.config({ path: '../client/.env' });
 
-const corsOptions = { origin : [process.env.VITE_ADDRESS]} // Port Vite servers run on
+const corsOptions = { origin : [process.env.VITE_ADDRESS], credentials: true} // Port Vite servers run on
 app.use(cors(corsOptions))
 const port = 8080;
 
@@ -57,7 +57,7 @@ app.post("/register", async (req, res) => {
                     "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
                     [username, email, hash]
                     );
-                    res.status(201).json({ message: "User registered successfully!", 
+                    res.status(201).json({ message: "User registered successfully and logged in!", 
                     user : { username : result.rows[0].username, email : result.rows[0].email }, success : true });
                 }
               });
@@ -97,6 +97,10 @@ app.post("/login", async (req, res) => {
     } catch(err) {
         console.log(err);
     }
+});
+
+app.post("/logout", async (req, res) => {
+    return res.json({ message: 'Logged out successfully.', user : null, success: true })
 });
 
 app.listen(port, () => {

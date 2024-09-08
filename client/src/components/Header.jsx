@@ -4,10 +4,32 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsContext from '../context/SettingsContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 function Header( { onForm }) {
     const context = useContext(SettingsContext);
     const navigate = useNavigate();
+
+    const { user, register, login, logout } = useContext(AuthContext);
+
+    const [logoutMessage, setLogoutMessage] = useState('');
+
+    const handleLogout = async () => {
+        try {
+            await logout();  // Call the logout function from AuthContext
+
+            setLogoutMessage('Log out successful!');
+
+            setTimeout(() => {
+                setLogoutMessage('');
+                // Redirect to homepage after logout
+            }, 3000);  // 3000ms = 3 seconds
+
+            navigate('/');
+        } catch (error) {
+            console.error("Logout failed: ", error);
+        }
+    };
 
     return (
         <div className="d-flex align-items-center justify-content-start" style={{ width: '100%' }}>
@@ -28,8 +50,17 @@ function Header( { onForm }) {
                         <AccountCircleIcon style={{ color: "#5C5470", fontSize: "20px" }}/>
                     </a>
                     <ul className="dropdown-menu custom-dropdown-menu" aria-labelledby="dropdownUser1">
-                        <li><a className="dropdown-item" onClick={() => navigate('/login') } style={{ fontSize: "8px" }}>Sign In</a></li>
-                        <li><a className="dropdown-item" onClick={() => navigate('/register') } style={{ fontSize: "8px" }}>Register</a></li>
+                        {user === null ?
+                        <>
+                            <li><a className="dropdown-item" onClick={() => navigate('/login') } style={{ fontSize: "8px" }}>Sign In</a></li>
+                            <li><a className="dropdown-item" onClick={() => navigate('/register') } style={{ fontSize: "8px" }}>Register</a></li>
+                        </>
+                        :
+                        <>
+                            <li><a className="dropdown-item" onClick={handleLogout} style={{ fontSize: "8px" }}>Sign Out</a></li>
+                        </>
+                        }
+                        
                     </ul>
                 </div>
 
@@ -37,6 +68,20 @@ function Header( { onForm }) {
                 <div className="ms-1">
                     <SettingsIcon style={{ color: "#5C5470", fontSize: "20px" }} onClick= {() => context.setShowSettings(true) } />
                 </div>
+
+                {logoutMessage && (
+                <div className="alert alert-success position-fixed top-0 start-50 translate-middle-x mt-1" style={{ 
+                    fontSize: '8px', 
+                    padding: '2px 5px', 
+                    zIndex: 9999,     // Ensure it appears on top
+                    width: '15%',    // Full width to cover the screen
+                    textAlign: 'center',
+                    
+                    top: '20px'
+                }}>
+                    {logoutMessage}
+                </div>
+                )}
             </div>
         </div>
     );

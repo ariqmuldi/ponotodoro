@@ -2,6 +2,9 @@ import { useState, useEffect, useContext, useRef} from 'react'
 import "../scripts/FormValidation.js"
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext.jsx';
+import SettingsContext from '../context/SettingsContext';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 function UserForm( { formType }) {
     const [username, setUsername] = useState('');
@@ -10,7 +13,10 @@ function UserForm( { formType }) {
     const [message, setMessage] = useState(''); 
     const [messageType, setMessageType] = useState('');
 
-    const { register, login } = useContext(AuthContext);
+    const { user, register, login, logout } = useContext(AuthContext);
+    const context = useContext(SettingsContext);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Custom Bootstrap form validation script inside React's useEffect
@@ -36,6 +42,12 @@ function UserForm( { formType }) {
         setMessageType('');
     }, [formType]);
 
+    useEffect(() => {
+        if (user) {
+            console.log("Logged in user in UserForm:", user);
+        }
+    }, [user]);  // Runs when 'user' is updated
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -44,9 +56,6 @@ function UserForm( { formType }) {
         // Check if the form is valid
         if (form.checkValidity()) {
             // If valid, log values and reset the form
-            console.log("Username: ", username);
-            console.log("Email: ", email);
-            console.log("Password: ", password);
 
             let response;
             try {
@@ -59,6 +68,7 @@ function UserForm( { formType }) {
 
                 setMessage(response.message);
                 setMessageType(response.success ? 'success' : 'error');
+
 
             } catch(err) {
                 console.log(err);
@@ -101,7 +111,74 @@ function UserForm( { formType }) {
                 <p className={messageType === 'error' ? 'text-danger ' : 'text-success '}>{message}</p>
             </div>
 
-            <form className="row needs-validation" noValidate onSubmit={handleSubmit}>
+            { user === null ?
+                <form className="row needs-validation" noValidate onSubmit={handleSubmit}>
+                    {formType === "login" ?
+                    null
+                    :
+                    <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '10px'}}>
+                        <label className="validationCustom01 form-label">Username</label>
+                        <input type="text" className="form-control" id="validationCustom01" style={{ 
+                        padding: '2px 3px',  // Reduces padding
+                        lineHeight: '1.2',   // Controls the line height
+                        height: '20px',       // Sets a smaller height
+                        fontSize: '8px',
+                        width : '150px'
+                        }} onChange={handleUsernameChange} value={username} required />
+                        <div className="invalid-feedback" style={{fontSize : '8px'}}>
+                            Please provide a valid username.
+                        </div>
+                    </div>
+                    }
+
+                    <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '10px'}}>
+                        <label className="validationCustom02 form-label">Email</label>
+                        <input type="email" className="form-control" id="validationCustom02" style={{ 
+                        padding: '2px 3px',  // Reduces padding
+                        lineHeight: '1.2',   // Controls the line height
+                        height: '20px',       // Sets a smaller height
+                        fontSize: '8px',
+                        width : '150px'
+                        }} onChange={handleEmailChange} value={email} required />
+                        <div className="invalid-feedback" style={{fontSize : '8px'}}>
+                            Please provide a valid email.
+                        </div>
+                    </div>
+
+                    <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '10px'}}>
+                        <label className="validationCustom03 form-label">Password</label>
+                        <input type="password" className="form-control" id="validationCustom03" style={{ 
+                        padding: '2px 3px',  // Reduces padding
+                        lineHeight: '1.2',   // Controls the line height
+                        height: '20px',       // Sets a smaller height
+                        fontSize: '8px',
+                        width : '150px'
+                        }} onChange={handlePasswordChange} value={password} required />
+                        <div className="invalid-feedback" style={{fontSize : '8px'}}>
+                            Please provide a valid password.
+                        </div>
+                    </div>
+
+                    <div className="d-flex flex-column align-items-center col-12 pt-1">
+                        <button className="btn btn-primary" type="submit" style={{
+                            fontSize: '8px',   // Reduces font size
+                            padding: '2px 5px', // Reduces padding for smaller appearance
+                            height: '20px',    // Controls button height
+                            width: '60px',     // Sets button width
+                            backgroundColor: '#5C5470',  // Button background color
+                            border: '1px solid #5C5470',  // Button border color
+                            color: '#FFF4EA'
+                        }}>Submit</button>
+                    </div>
+
+                </form>
+            :
+                <div className="d-flex flex-column align-items-center">
+                    <ArrowBackIcon onClick={ () => navigate("/") }/>
+                </div>
+            }
+
+            {/* <form className="row needs-validation" noValidate onSubmit={handleSubmit}>
                 {formType === "login" ?
                 null
                 :
@@ -159,7 +236,7 @@ function UserForm( { formType }) {
                         color: '#FFF4EA'
                     }}>Submit</button>
                 </div>
-            </form>
+            </form> */}
             
 
         </div>

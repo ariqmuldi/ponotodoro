@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Timer from './components/Timer';
 import Settings from './components/Settings';
@@ -23,19 +23,19 @@ function App() {
     setAllInputs(newInputs); // Update the state
   };
 
-  const fetchApi = async () => {
-    const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
-    // const response = await axios.get(`${import.meta.env.VITE_BACKEND_ADDRESS}api`);
-    console.log(response.data.fruits);
-  };
+  // const fetchApi = async () => {
+  //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
+  //   // const response = await axios.get(`${import.meta.env.VITE_BACKEND_ADDRESS}api`);
+  //   console.log(response.data.fruits);
+  // };
 
-  useEffect(() => {
-    fetchApi();
-  }, [])
+  // useEffect(() => {
+  //   fetchApi();
+  // }, [])
 
   return (
     <AuthProvider>
-      
+
     <Router>
       <Routes>
         <Route exact path = "/" element = {
