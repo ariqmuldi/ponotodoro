@@ -114,10 +114,7 @@ function Timer() {
             <div className="settingsButton-container d-flex justify-content-center align-items-center p-1">
                 <SettingsIcon onClick= {() => context.setShowSettings(true)}/>
             </div>
-
-            <div className="input-container">
-                <Input />
-            </div>
+        
         </div>
     );
 }
