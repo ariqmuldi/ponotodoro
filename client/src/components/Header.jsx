@@ -10,14 +10,14 @@ function Header() {
         <div className="d-flex align-items-center justify-content-start" style={{ width: '100%' }}>
             {/* Ponotodoro text */}
             <div className="d-flex align-items-center">
-                <span className="ms-2" style={{ color: "#5C5470", fontSize: "10px" }}> Ponotodoro </span>
+                <span className="ms-2" style={{ color: "#5C5470", fontSize: "10px" }} onClick={ () => context.setShowSettings(false)} > Ponotodoro </span>
             </div>
 
             {/* Dropdown Menu and Settings */}
             <div className="d-flex align-items-center ms-auto" style={{ marginRight: '5px' }}>
                 {/* Dropdown Menu */}
                 <div className="dropdown">
-                    <a href="#" className="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a className="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <AccountCircleIcon style={{ color: "#5C5470", fontSize: "20px" }}/>
                     </a>
                     <ul className="dropdown-menu custom-dropdown-menu" aria-labelledby="dropdownUser1">
