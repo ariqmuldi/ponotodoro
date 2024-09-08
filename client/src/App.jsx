@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import axios from 'axios'
-import env from 'dotenv'
-import Timer from './components/Timer'
-import Settings from './components/Settings'
-import SettingsContext from './context/SettingsContext'
-import Input from './components/Input'
-import InputItems from './components/InputItems'
-import Header from './components/Header'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Timer from './components/Timer';
+import Settings from './components/Settings';
+import SettingsContext from './context/SettingsContext';
+import Input from './components/Input';
+import InputItems from './components/InputItems';
+import Header from './components/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UserForm from './components/UserForm'
+import UserForm from './components/UserForm';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -36,6 +34,8 @@ function App() {
   }, [])
 
   return (
+    <AuthProvider>
+      
     <Router>
       <Routes>
         <Route exact path = "/" element = {
@@ -115,6 +115,8 @@ function App() {
         </Route>
       </Routes>
     </Router>
+
+    </AuthProvider>
     
     
   );

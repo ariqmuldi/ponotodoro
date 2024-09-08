@@ -1,10 +1,16 @@
 import { useState, useEffect, useContext, useRef} from 'react'
 import "../scripts/FormValidation.js"
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 function UserForm( { formType }) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');  
     const [password, setPassword] = useState('');  
+    const [message, setMessage] = useState(''); 
+    const [messageType, setMessageType] = useState('');
+
+    const { register } = useContext(AuthContext);
 
     useEffect(() => {
         // Custom Bootstrap form validation script inside React's useEffect
@@ -40,6 +46,22 @@ function UserForm( { formType }) {
             console.log("Email: ", email);
             console.log("Password: ", password);
 
+            let response;
+            try {
+                if(formType === "register") {
+                    response = await register(username, email, password);
+                }
+                else {
+                    console.log("login") // login
+                }
+
+                setMessage(response.message);
+                setMessageType(response.success ? 'success' : 'error');
+
+            } catch(err) {
+                console.log(err);
+            }
+
             // Clear the form fields after successful submission
             setUsername('');
             setEmail('');
@@ -72,11 +94,16 @@ function UserForm( { formType }) {
             :
             <p className="fw-bold"> Register to Ponotodoro</p> 
             }
+
+            <div className="d-flex align-items-center text-center justify-content-center" style={{ width: '100%', fontSize: '9px' }} > 
+                <p className={messageType === 'error' ? 'text-danger ' : 'text-success '}>{message}</p>
+            </div>
+
             <form className="row needs-validation" noValidate onSubmit={handleSubmit}>
                 {formType === "login" ?
                 null
                 :
-                <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '11px'}}>
+                <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '10px'}}>
                     <label className="validationCustom01 form-label">Username</label>
                     <input type="text" className="form-control" id="validationCustom01" style={{ 
                     padding: '2px 3px',  // Reduces padding
@@ -91,7 +118,7 @@ function UserForm( { formType }) {
                 </div>
                 }
 
-                <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '11px'}}>
+                <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '10px'}}>
                     <label className="validationCustom02 form-label">Email</label>
                     <input type="email" className="form-control" id="validationCustom02" style={{ 
                     padding: '2px 3px',  // Reduces padding
@@ -105,8 +132,8 @@ function UserForm( { formType }) {
                     </div>
                 </div>
 
-                <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '11px'}}>
-                    <label for="validationCustom03" className="form-label">Password</label>
+                <div className="d-flex flex-column align-items-center text-center pb-3" style={{fontSize : '10px'}}>
+                    <label className="validationCustom03 form-label">Password</label>
                     <input type="password" className="form-control" id="validationCustom03" style={{ 
                     padding: '2px 3px',  // Reduces padding
                     lineHeight: '1.2',   // Controls the line height
@@ -120,11 +147,14 @@ function UserForm( { formType }) {
                 </div>
 
                 <div className="d-flex flex-column align-items-center col-12 pt-1">
-                    <button class="btn btn-primary" type="submit" style={{
+                    <button className="btn btn-primary" type="submit" style={{
                         fontSize: '8px',   // Reduces font size
                         padding: '2px 5px', // Reduces padding for smaller appearance
                         height: '20px',    // Controls button height
-                        width: '60px'      // Sets button width
+                        width: '60px',     // Sets button width
+                        backgroundColor: '#5C5470',  // Button background color
+                        border: '1px solid #5C5470',  // Button border color
+                        color: '#FFF4EA'
                     }}>Submit</button>
                 </div>
             </form>
