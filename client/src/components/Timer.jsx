@@ -74,7 +74,7 @@ function Timer() {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [context]);
+    }, [context.workMinutes, context.breakMinutes, context.longBreakMinutes]);
 
     // useEffect(() => {
     //     const checkSecondsLeft = () => {
