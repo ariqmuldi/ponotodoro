@@ -5,6 +5,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsContext from '../context/SettingsContext';
+import Input from './Input';
 
 function Timer() {
     const context = useContext(SettingsContext);
@@ -111,7 +112,11 @@ function Timer() {
             </div>
 
             <div className="settingsButton-container d-flex justify-content-center align-items-center p-1">
-                <SettingsIcon onClick= { () => context.setShowSettings(true)}/>
+                <SettingsIcon onClick= {() => context.setShowSettings(true)}/>
+            </div>
+
+            <div className="input-container">
+                <Input />
             </div>
         </div>
     );

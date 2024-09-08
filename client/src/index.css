@@ -107,3 +107,33 @@ body {
     transform: translateY(-50%); /* Vertically center it */
 }
 
+.input-input-container {
+    background-color: transparent;
+    border : none;
+    outline : none;
+    width : 300px;
+
+    height: 40px;
+    line-height: 40px;
+
+    font-size: 10px; 
+}
+
+.input-input-container::placeholder {
+    font-size : 10px;
+    text-align: center;
+    caret-color: white;
+    
+    line-height: 40px;
+}
+
+.input-input-container:focus {
+    background-color: transparent; /* Prevents white background on focus */
+    outline: none; /* Removes any browser-specific outline */
+    box-shadow: none; /* Removes any focus shadow */
+    caret-color: white;
+    color : white;
+    font-size: 10px;
+}
+
+
