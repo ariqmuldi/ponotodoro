@@ -106,14 +106,14 @@ function Timer() {
             backgroundColor: `rgba(255, 255, 255, .2)`,
             })}/>
 
-            <div className="buttons-container d-flex justify-content-center align-items-center gap-4 pt-2 pb-2">
+            <div className="buttons-container d-flex justify-content-center align-items-center gap-4 pt-2">
                 {isPaused ? <PlayCircleIcon onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/> : 
                     <PauseCircleIcon onClick={() => { setIsPaused(true); isPausedRef.current = true; }} /> }
             </div>
 
-            <div className="settingsButton-container d-flex justify-content-center align-items-center p-1">
-                <SettingsIcon onClick= {() => context.setShowSettings(true)}/>
-            </div>
+            {/* <div className="settingsButton-container d-flex justify-content-center align-items-center p-1">
+                <SettingsIcon />
+            </div> */}
         
         </div>
     );

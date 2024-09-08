@@ -10,19 +10,26 @@
     --orange : #FF9874;
 }
 
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     background-color: #352F44;
     color : #e4e4e4;
+    margin: 0;
+    padding: 0;
 }
 
 .main-container {
-    min-height: 100vh; /* height : 100vh */
+    /* min-height: 100vh; height : 100vh */
 }
 
 .timer-container {
     width : 225px;
     height: auto; /* Let the height adjust based on content */
-    margin-top: -30px;
+    margin-top: 0px;
 }
 
 .buttons-container {
@@ -138,3 +145,6 @@ body {
 }
 
 
+.custom-dropdown-menu {
+    left: -20px; /* Move the dropdown 20px to the left */
+}
