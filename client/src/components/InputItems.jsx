@@ -10,7 +10,7 @@ function InputItems( { allInputs, removeItem }) {
         setTimeout(() => {
             removeItem(index); 
             setClickedItem(null);
-        }, 1000);
+        }, 750);
     };
 
     const listItems = allInputs.map( (item, index) => {
