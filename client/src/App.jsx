@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import axios from 'axios'
-import env from 'dotenv'
-import Timer from './components/Timer'
-import Settings from './components/Settings'
-import SettingsContext from './context/SettingsContext'
-import Input from './components/Input'
-import InputItems from './components/InputItems'
-import Header from './components/Header'
+import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import Timer from './components/Timer';
+import Settings from './components/Settings';
+import SettingsContext from './context/SettingsContext';
+import Input from './components/Input';
+import InputItems from './components/InputItems';
+import Header from './components/Header';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import UserForm from './components/UserForm';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -23,43 +23,101 @@ function App() {
     setAllInputs(newInputs); // Update the state
   };
 
-  const fetchApi = async () => {
-    const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
-    // const response = await axios.get(`${import.meta.env.VITE_BACKEND_ADDRESS}api`);
-    console.log(response.data.fruits);
-  };
+  // const fetchApi = async () => {
+  //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
+  //   // const response = await axios.get(`${import.meta.env.VITE_BACKEND_ADDRESS}api`);
+  //   console.log(response.data.fruits);
+  // };
 
-  useEffect(() => {
-    fetchApi();
-  }, [])
+  // useEffect(() => {
+  //   fetchApi();
+  // }, [])
 
   return (
-    <div className="main-container d-flex flex-column justify-content-center">
-      <SettingsContext.Provider value ={ { workMinutes, breakMinutes, longBreakMinutes, 
-      setWorkMinutes, setBreakMinutes, setLongBreakMinutes, showSettings, setShowSettings} } >
+    <AuthProvider>
 
-        <div className="header-container">
-          <Header />
-        </div>
-
-        <div className="timer-settings-container d-flex flex-column align-items-center w-100">
-          {showSettings ? <Settings /> : <Timer /> }
-        </div>
-
-
-        {!showSettings && (
+    <Router>
+      <Routes>
+        <Route exact path = "/" element = {
           <>
-            <div className="input-container mb-3">
-              <Input allInputs={allInputs} setAllInputs={setAllInputs} />
+            <div className="main-container d-flex flex-column justify-content-center">
+              <SettingsContext.Provider value ={ { workMinutes, breakMinutes, longBreakMinutes, 
+              setWorkMinutes, setBreakMinutes, setLongBreakMinutes, showSettings, setShowSettings } } >
+
+                <div className="header-container">
+                  <Header onForm={false} />
+                </div>
+
+                <div className="timer-settings-container d-flex flex-column align-items-center w-100">
+                  {showSettings ? <Settings /> : <Timer /> }
+                </div>
+
+
+                {!showSettings && (
+                <>
+                  <div className="input-container mb-3">
+                    <Input allInputs={allInputs} setAllInputs={setAllInputs} />
+                  </div>
+
+                  <InputItems allInputs={allInputs} removeItem={removeItem} />
+                </>
+                )};
+
+              </SettingsContext.Provider>
+      
+            </div>
+          </>
+        } >
+        </Route>
+
+        <Route exact path = "/register" element = {
+          <>
+            <div className="main-container d-flex flex-column justify-content-center">
+              <SettingsContext.Provider value ={ { workMinutes, breakMinutes, longBreakMinutes, 
+              setWorkMinutes, setBreakMinutes, setLongBreakMinutes, showSettings, setShowSettings } } >
+
+                <div className="header-container">
+                  <Header onForm={true} />
+                </div>
+
+                <div className="userForm-container">
+                  <UserForm formType={'register'} />
+                </div>
+
+              </SettingsContext.Provider>
+
             </div>
 
-            <InputItems allInputs={allInputs} removeItem={removeItem} />
           </>
-        )}
+        } >
+        </Route>
 
-      </SettingsContext.Provider>
-      
-    </div>
+        <Route exact path = "/login" element = {
+          <>
+            <div className="main-container d-flex flex-column justify-content-center">
+              <SettingsContext.Provider value ={ { workMinutes, breakMinutes, longBreakMinutes, 
+              setWorkMinutes, setBreakMinutes, setLongBreakMinutes, showSettings, setShowSettings } } >
+
+                <div className="header-container">
+                  <Header onForm={true} />
+                </div>
+
+                <div className="userForm-container">
+                  <UserForm formType={'login'} />
+                </div>
+
+              </SettingsContext.Provider>
+
+            </div>
+
+          </>
+        } >
+        </Route>
+      </Routes>
+    </Router>
+
+    </AuthProvider>
+    
     
   );
 }
