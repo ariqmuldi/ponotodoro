@@ -134,6 +134,7 @@ body {
     caret-color: white;
     
     line-height: 40px;
+    color: #9C92AC;
 }
 
 .input-input-container:focus {
@@ -165,6 +166,7 @@ body {
     caret-color: white;
     
     line-height: 40px;
+    color: #9C92AC;
 }
 
 .title-note-container:focus {
@@ -186,6 +188,10 @@ body {
      color: rgba(255, 255, 255, 0.15);
 }
 
+.write-note-container::placeholder {
+    color: #9C92AC;  /* Change this to the desired placeholder color */
+}
+
 .write-note-container:focus {
     background-color: transparent; /* Prevents white background on focus */
     outline: none; /* Removes any browser-specific outline */
@@ -202,4 +208,11 @@ body {
     min-height: 20px;
     padding: 2px;
     
+}
+
+.note {
+    background: #5C5470;
+    border-radius: 7px;
+    box-shadow: 0 0px 5px #ccc;
+    padding: 10px;
 }

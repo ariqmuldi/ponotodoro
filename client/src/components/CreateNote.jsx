@@ -24,6 +24,7 @@ function CreateNote(props) {
         props.onAdd(note);
         setNote({ title : "", content : "" })
         e.preventDefault();
+        setIsExpanded(false);
     }
 
     function handleExpand() {
@@ -31,7 +32,7 @@ function CreateNote(props) {
     }
 
     return (
-        <div>  
+        <div className="mt-3">  
             <form 
               className="create-note d-flex flex-column align-items-center justify-content-center mb-3"
               style={{ width: '100%', marginTop: '-5px'}}  // Ensure the form takes full width

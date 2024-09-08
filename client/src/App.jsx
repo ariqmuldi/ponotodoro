@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserForm from './components/UserForm';
 import { AuthProvider } from './context/AuthContext';
 import CreateNote from './components/CreateNote';
+import Note from './components/Note';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -40,7 +41,7 @@ function App() {
         console.log('listnotes: ', listNotes);
     }
     
-    }, [listNotes]);
+  }, [listNotes]);
 
   // const fetchApi = async () => {
   //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
@@ -82,7 +83,25 @@ function App() {
                 </>
                 )}
 
-                  <CreateNote onAdd={addNote} />
+                <hr 
+                className="d-flex align-items-center text-center justify-content-center" 
+                style={{ margin: '0 auto', padding: 0, width: '30%', color: '#6D6A75' }} 
+                />
+
+                <CreateNote onAdd={addNote} />
+
+                <div className="container-fluid mb-3">
+                  <div className="row justify-content-center g-4">
+                  {listNotes.map((notes, index) => {
+                    return (
+                      <div className="col-12 col-sm-6 col-md-4 d-flex justify-content-center" key={index}>
+                        <Note title={notes.title} content={notes.content} id={index} />
+                      </div>
+                    );
+                  })}
+                  </div>
+                </div>
+                  
 
 
 
