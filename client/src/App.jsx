@@ -9,6 +9,7 @@ import Header from './components/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserForm from './components/UserForm';
 import { AuthProvider } from './context/AuthContext';
+import CreateNote from './components/CreateNote';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -18,10 +19,28 @@ function App() {
 
   const [allInputs, setAllInputs] = useState([]);
 
+  const [listNotes, setListNotes] = useState([]);
+
   const removeItem = (index) => {
     const newInputs = allInputs.filter((_, i) => i !== index); // Filter out the clicked item
     setAllInputs(newInputs); // Update the state
   };
+
+  function addNote(note) {
+    setListNotes((prev) => { return [
+      ...prev, note
+    ];
+
+    });
+
+  };
+
+  useEffect(() => {
+    if (listNotes) {
+        console.log('listnotes: ', listNotes);
+    }
+    
+    }, [listNotes]);
 
   // const fetchApi = async () => {
   //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
@@ -55,13 +74,17 @@ function App() {
 
                 {!showSettings && (
                 <>
-                  <div className="input-container mb-3">
+                  <div className="input-container">
                     <Input allInputs={allInputs} setAllInputs={setAllInputs} />
                   </div>
 
                   <InputItems allInputs={allInputs} removeItem={removeItem} />
                 </>
-                )};
+                )}
+
+                  <CreateNote onAdd={addNote} />
+
+
 
               </SettingsContext.Provider>
       
