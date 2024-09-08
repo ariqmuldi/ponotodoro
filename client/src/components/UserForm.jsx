@@ -10,7 +10,7 @@ function UserForm( { formType }) {
     const [message, setMessage] = useState(''); 
     const [messageType, setMessageType] = useState('');
 
-    const { register } = useContext(AuthContext);
+    const { register, login } = useContext(AuthContext);
 
     useEffect(() => {
         // Custom Bootstrap form validation script inside React's useEffect
@@ -32,6 +32,8 @@ function UserForm( { formType }) {
         setUsername('');
         setEmail('');
         setPassword('');
+        setMessage('');
+        setMessageType('');
     }, [formType]);
 
     const handleSubmit = async (e) => {
@@ -52,7 +54,7 @@ function UserForm( { formType }) {
                     response = await register(username, email, password);
                 }
                 else {
-                    console.log("login") // login
+                    response = await login(email, password);
                 }
 
                 setMessage(response.message);

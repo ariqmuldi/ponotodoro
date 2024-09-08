@@ -16,17 +16,33 @@ export const AuthProvider = ({ children }) => {
             );
             return response.data;
         } catch (error) {
-            return { message: 'Registration failed ' + error, user : null, success: false };
+            return { message: 'Registration failed: ' + error, user : null, success: false };
         } finally {
             setLoading(false); // Stop loading
         }
     };
 
+    const login = async (email, password) => {
+        setLoading(true); // Start loading
+        try {
+            const response = await axios.post(import.meta.env.VITE_BACKEND_ADDRESS + "login", { email, password },
+                { headers : { 'Content-Type': 'application/json' } }
+            );
+            return response.data;
+        } catch(err) {
+            return { message: 'Login failed: ' + err, user : null, success: false };
+        }
+        finally {
+            setLoading(false); // Stop loading
+        }
+    
+    }
+
     return (
         // Use the AuthContext.Provider to provide the authentication context to the rest of the app
         // Gives user, login, logout, loading in an object
         // {children} represents the components that will consume this context.
-        <AuthContext.Provider value={{ register }}>
+        <AuthContext.Provider value={{ register, login }}>
             {children}
         </AuthContext.Provider>
     );
