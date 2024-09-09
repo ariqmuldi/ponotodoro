@@ -26,7 +26,7 @@ function CreateNote(props) {
 
     async function handleClick(e) {
         e.preventDefault();
-        props.onAdd(note);
+        // props.onAdd(note);
 
         if (user) {
             try {
@@ -34,11 +34,13 @@ function CreateNote(props) {
                     { headers: { 'Content-Type': 'application/json' } }
                 );
                 console.log("Note created:", response.data);
+                props.onAdd(response.data.note);
             } catch (e) {
                 console.error("Error creating note:", e);
             }
         } else {
             console.log("User is null. Cannot create recieve note.");
+            props.onAdd(note);
         }
  
         setNote({ title : "", content : "" })
