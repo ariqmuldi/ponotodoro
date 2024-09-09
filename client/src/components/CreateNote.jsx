@@ -30,7 +30,7 @@ function CreateNote(props) {
 
         if (user) {
             try {
-                const response = await axios.post(import.meta.env.VITE_BACKEND_ADDRESS + "create-note", { title: note.title, content: note.content },
+                const response = await axios.post(import.meta.env.VITE_BACKEND_ADDRESS + "create-note", { title: note.title, content: note.content, userId : user.id},
                     { headers: { 'Content-Type': 'application/json' } }
                 );
                 console.log("Note created:", response.data);

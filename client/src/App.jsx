@@ -44,16 +44,39 @@ function App() {
     })
   }
 
-  useEffect(() => {
-    if (listNotes) { }
-  }, [listNotes]);
+  const getNotes = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_ADDRESS}get-notes`, { userId : user.id },
+        { headers: { 'Content-Type': 'application/json' } } );
+        if (response.data.success) {
+          console.log(response.data.notes)
+          setListNotes(response.data.notes);
+      } else {
+        console.log("No notes found or unauthorized.");
+      }
+    } catch (err) {
+      console.error("Error fetching notes:", err);
+    }
+  };
 
   useEffect(() => {
     if (user) {
-      setListNotes([]); // Clear all notes upon login
+      getNotes(); // Call this when the user is logged in
+    } else {
+      setListNotes([]); // Clear notes when user logs out
     }
-    else { }
-  }, [user]); 
+  }, [user]);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setListNotes([]); // Clear all notes upon login
+  //   }
+  //   else { }
+  // }, [user]); 
+
+  // useEffect(() => {
+  //   console.log(listNotes);
+  // }, [listNotes])
 
   // const fetchApi = async () => {
   //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
@@ -104,10 +127,10 @@ function App() {
 
                 <div className="container-fluid mb-3">
                   <div className="row justify-content-center g-4">
-                  {listNotes.map((notes, index) => {
+                  {listNotes.map((note, index) => {
                     return (
                       <div className="col-12 col-sm-6 col-md-4 d-flex justify-content-center" key={index}>
-                        <Note title={notes.title} content={notes.content} id={index} onDel={delNote} />
+                        <Note title={note.title || note.note_title} content={note.content || note.note_content} id={index} onDel={delNote} />
                       </div>
                     );
                   })}

@@ -28,14 +28,14 @@ function Note(props) {
                     flexGrow : 1
                 }}>
                 <h5 style={{ marginBottom: '10px', marginTop: '0', fontSize : '12px' }}>{props.title}</h5>
-                <p style={{ marginBottom: '10px', fontSize : '10px' }}>{props.content}</p>
+                <p style={{ marginBottom: '10px', fontSize : '9px' }}>{props.content}</p>
                 
             </div>
             <div className="d-flex align-items-center justify-content-center" style={{ marginTop: 'auto' }}>
                 {clickedItem === props.id ? 
-                    <CheckCircleOutlinedIcon style={{ color: 'green', fontSize: '10px' }} /> // Green checkmark icon
+                    <CheckCircleOutlinedIcon style={{ color: 'green', fontSize: '9px' }} /> // Green checkmark icon
                     :
-                    <DeleteIcon style={{ fontSize: '10px' }} onClick={() => handleItemClick(props.id)} /> // Delete icon
+                    <DeleteIcon style={{ fontSize: '9px' }} onClick={() => handleItemClick(props.id)} /> // Delete icon
                 }
             </div>
             
