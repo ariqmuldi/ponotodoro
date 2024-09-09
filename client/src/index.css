@@ -125,6 +125,7 @@ body {
     line-height: 40px;
 
     font-size: 10px; 
+    color: rgba(255, 255, 255, 0.15);
 }
 
 .input-input-container::placeholder {
@@ -133,6 +134,7 @@ body {
     caret-color: white;
     
     line-height: 40px;
+    color: #9C92AC;
 }
 
 .input-input-container:focus {
@@ -144,7 +146,73 @@ body {
     font-size: 10px;
 }
 
-
 .custom-dropdown-menu {
     left: -20px; /* Move the dropdown 20px to the left */
+}
+
+.title-note-container {
+    width: 25%;
+    max-width: 500px;
+    font-size : 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.15);
+}
+
+.title-note-container::placeholder {
+    font-size : 10px;
+    text-align: center;
+    caret-color: white;
+    
+    line-height: 40px;
+    color: #9C92AC;
+}
+
+.title-note-container:focus {
+    background-color: transparent; /* Prevents white background on focus */
+    outline: none; /* Removes any browser-specific outline */
+    box-shadow: none; /* Removes any focus shadow */
+    caret-color: white;
+    color : white;
+    font-size: 10px;
+}
+
+.write-note-container {
+     width: '25%'; 
+     max-width: 500px; 
+     font-size : 10px;
+     border: none;
+     outline: none;
+     background-color: transparent;
+     color: rgba(255, 255, 255, 0.15);
+}
+
+.write-note-container::placeholder {
+    color: #9C92AC;  /* Change this to the desired placeholder color */
+}
+
+.write-note-container:focus {
+    background-color: transparent; /* Prevents white background on focus */
+    outline: none; /* Removes any browser-specific outline */
+    box-shadow: none; /* Removes any focus shadow */
+    caret-color: white;
+    color : white;
+    font-size: 10px;
+}
+
+.fab-note-container {
+    margin-top: -15px;
+    width: 20px;   
+    height: 20px;
+    min-height: 20px;
+    padding: 2px;
+    
+}
+
+.note {
+    background: #5C5470;
+    border-radius: 7px;
+    box-shadow: 0 0px 5px #ccc;
+    padding: 10px;
 }

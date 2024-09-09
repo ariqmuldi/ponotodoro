@@ -58,7 +58,7 @@ app.post("/register", async (req, res) => {
                     [username, email, hash]
                     );
                     res.status(201).json({ message: "User registered successfully and logged in!", 
-                    user : { username : result.rows[0].username, email : result.rows[0].email }, success : true });
+                    user : { id : result.rows[0].id, username : result.rows[0].username, email : result.rows[0].email }, success : true });
                 }
               });
         }
@@ -83,7 +83,8 @@ app.post("/login", async (req, res) => {
                     return res.json({ message: 'Error comparing passwords: ' + err, user : null, success: false });
                 } else {
                     if (valid) {
-                        return res.status(201).json({ message: 'Successfully logged in!', user : { username : result.rows[0].username, email : result.rows[0].email }, success: true });
+                        return res.status(201).json({ message: 'Successfully logged in!', user : {id : result.rows[0].id, 
+                            username : result.rows[0].username, email : result.rows[0].email }, success: true });
                     } else {
                         return res.json({ message: 'Incorrect email or password.', user : null, success: false });
                     }
@@ -102,6 +103,72 @@ app.post("/login", async (req, res) => {
 app.post("/logout", async (req, res) => {
     return res.json({ message: 'Logged out successfully.', user : null, success: true })
 });
+
+app.post("/create-note", async (req, res) => { 
+    const { title, content, userId } = req.body; // Extract the note object
+
+    // const user_id = req.session.id;
+    // if (!user_id) {
+    //     return res.json({ message: "Unauthorized. Please log in.", note: null, success : false });
+    // }
+
+    try {
+        const result = await db.query("INSERT INTO notes (user_id, note_title, note_content) VALUES ($1, $2, $3) RETURNING *", [userId, title, content]);
+
+        if (result.rows.length > 0) {
+            res.status(201).json({ message: "Note added to db successfully.", note: result.rows[0], success : true });
+        } else {
+            res.json({ message: "Failed to create the note.", note: null, success : false  });
+        }
+
+    } catch(err) {
+        console.error("Error creating note:", err);
+        res.json({ message: "Server error. Failed to create the note.", note : null, success : false  })
+    }
+    
+});
+
+app.post("/get-notes", async (req, res) => { 
+    // const user_id = req.session.id;
+    // if (!user_id) {
+    //     return res.json({ message: "Unauthorized. Please log in.", note: null, success : false });
+    // }
+
+    const { userId } = req.body
+
+    const result = await db.query("SELECT * FROM notes WHERE user_id = $1", [userId]);
+
+    try {
+        const result = await db.query("SELECT * FROM notes WHERE user_id = $1", [userId]);
+
+        if (result.rows.length > 0) {
+            res.status(200).json({ message: "Notes fetched successfully.", notes: result.rows, success: true });
+        } else {
+            res.status(200).json({ message: "No notes found.", notes: [], success: true });
+        }
+    } catch (err) {
+        console.error("Error fetching notes:", err);
+        res.json({ message: "Server error. Failed to fetch notes.", notes: null, success: false });
+    }
+
+});
+
+app.post("/delete-note", async (req, res) => { 
+    const { noteId, userId } = req.body;
+
+    try {
+        const result = await db.query("DELETE FROM notes WHERE id = $1 AND user_id = $2 RETURNING *", [noteId, userId]);
+        if (result.rows.length > 0) {
+            res.status(200).json({ message: "Note deleted successfully.", success: true });
+        } else {
+            res.json({ message: "Note not found or unauthorized.", success: false });
+        }
+    } catch(err) {
+        console.error("Error deleting note:", err);
+        res.json({ message: "Server error. Failed to delete the note.", success: false });
+    }
+});
+
 
 app.listen(port, () => {
     console.log("Server running on port " + port);

@@ -15,7 +15,7 @@ function Input( {allInputs, setAllInputs} ) {
     return (
         <div className="d-flex justify-content-center align-items-center input-main-container text-center" style = {{marginTop: "-5px"}}>
             <form onSubmit={handleSubmit}> 
-                <input className="form-control input-input-container text-center" type="text" id="inputText" placeholder="What would you like to accomplish?" 
+                <input className="form-control input-input-container text-center" type="text" id="inputText" placeholder="What would you like to accomplish?"
                 value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
             </form>
         </div>

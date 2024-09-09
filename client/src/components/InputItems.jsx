@@ -18,11 +18,11 @@ function InputItems( { allInputs, removeItem }) {
         <div key={index} className="col-3 d-flex align-items-center justify-content-center mb-3" onClick={() => handleItemClick(index)}>
             <span key={index} className="d-flex align-items-center" style={{ gap: '8px' }} > 
                 {clickedItem === index ? (
-                    <CheckCircleOutlinedIcon style={{ fontSize: '12px', color: 'green' }} />
+                    <CheckCircleOutlinedIcon style={{ fontSize: '10px', color: 'green' }} />
                 ) : (
-                    <CircleOutlinedIcon style={{ fontSize: '12px', color: 'gray' }} />
+                    <CircleOutlinedIcon style={{ fontSize: '10px', color: 'gray' }} />
                 )}
-                <span style={{ fontSize: '12px' }}>{item}</span>
+                <span style={{ fontSize: '10px' }}>{item}</span>
             </span>
             
         </div>

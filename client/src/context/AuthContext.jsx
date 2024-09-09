@@ -67,11 +67,12 @@ export const AuthProvider = ({ children }) => {
     
     }
 
-    const logout = async () => {
+    const logout = async (clearNotes) => {
         setLoading(true);
         try {
             await axios.post(import.meta.env.VITE_BACKEND_ADDRESS + "logout", {}, { withCredentials: true });
             setUser(null);
+            clearNotes();
         } catch(err) {
             return { message: 'Logout failed: ' + err, success: false }
         } finally {
