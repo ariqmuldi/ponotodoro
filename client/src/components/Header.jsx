@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
-function Header( { onForm }) {
+function Header( { onForm, onLogout }) {
     const context = useContext(SettingsContext);
     const navigate = useNavigate();
 
@@ -17,6 +17,10 @@ function Header( { onForm }) {
     const handleLogout = async () => {
         try {
             await logout();  // Call the logout function from AuthContext
+
+            if (onLogout) {
+                onLogout();  // Clear notes by calling the onLogout prop
+            }
 
             setLogoutMessage('Log out successful!');
 

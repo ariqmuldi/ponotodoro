@@ -103,6 +103,13 @@ app.post("/logout", async (req, res) => {
     return res.json({ message: 'Logged out successfully.', user : null, success: true })
 });
 
+app.post("/create-note", async (req, res) => { 
+    const { title, content } = req.body; // Extract the note object
+    console.log(title, content);  // Log title and content to ensure it is received
+    res.status(200).json({ message: "Note received" }); // Respond to the client
+});
+
+
 app.listen(port, () => {
     console.log("Server running on port " + port);
 });

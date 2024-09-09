@@ -11,6 +11,7 @@ import UserForm from './components/UserForm';
 import { AuthProvider } from './context/AuthContext';
 import CreateNote from './components/CreateNote';
 import Note from './components/Note';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -19,8 +20,9 @@ function App() {
   const [longBreakMinutes, setLongBreakMinutes] = useState(15);
 
   const [allInputs, setAllInputs] = useState([]);
-
   const [listNotes, setListNotes] = useState([]);
+
+  const { user, register, login, logout } = useContext(AuthContext);
 
   const removeItem = (index) => {
     const newInputs = allInputs.filter((_, i) => i !== index); // Filter out the clicked item
@@ -43,11 +45,15 @@ function App() {
   }
 
   useEffect(() => {
-    if (listNotes) {
-        console.log('listnotes: ', listNotes);
-    }
-    
+    if (listNotes) { }
   }, [listNotes]);
+
+  useEffect(() => {
+    if (user) {
+      setListNotes([]); // Clear all notes upon login
+    }
+    else { }
+  }, [user]); 
 
   // const fetchApi = async () => {
   //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
@@ -60,7 +66,7 @@ function App() {
   // }, [])
 
   return (
-    <AuthProvider>
+    
 
     <Router>
       <Routes>
@@ -71,7 +77,7 @@ function App() {
               setWorkMinutes, setBreakMinutes, setLongBreakMinutes, showSettings, setShowSettings } } >
 
                 <div className="header-container">
-                  <Header onForm={false} />
+                  <Header onForm={false} onLogout={() => setListNotes([])} />
                 </div>
 
                 <div className="timer-settings-container d-flex flex-column align-items-center w-100">
@@ -164,7 +170,7 @@ function App() {
       </Routes>
     </Router>
 
-    </AuthProvider>
+    
     
     
   );

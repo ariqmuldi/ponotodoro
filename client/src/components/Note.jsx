@@ -1,9 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import { AuthContext } from '../context/AuthContext';
 
 function Note(props) {
     const [clickedItem, setClickedItem] = useState(null);
+
+    const { user, register, login, logout } = useContext(AuthContext);
 
     const handleItemClick = (index) => {
         setClickedItem(index); 

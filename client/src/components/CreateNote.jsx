@@ -2,6 +2,8 @@ import { useState, useEffect, useContext, useRef} from 'react'
 import AddIcon from "@mui/icons-material/Add";
 import { Fab } from "@mui/material";
 import { Zoom } from "@mui/material";
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 function CreateNote(props) {
     const [note, setNote] = useState( {
@@ -10,6 +12,8 @@ function CreateNote(props) {
     });
 
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const { user, register, login, logout } = useContext(AuthContext);
 
     function handleChange(e) {
         const {name, value} = e.target;
@@ -20,10 +24,24 @@ function CreateNote(props) {
         
     }
 
-    function handleClick(e) {
-        props.onAdd(note);
-        setNote({ title : "", content : "" })
+    async function handleClick(e) {
         e.preventDefault();
+        props.onAdd(note);
+
+        if (user) {
+            try {
+                const response = await axios.post(import.meta.env.VITE_BACKEND_ADDRESS + "create-note", { title: note.title, content: note.content },
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+                console.log("Note created:", response.data);
+            } catch (e) {
+                console.error("Error creating note:", e);
+            }
+        } else {
+            console.log("User is null. Cannot create recieve note.");
+        }
+ 
+        setNote({ title : "", content : "" })
         setIsExpanded(false);
     }
 
