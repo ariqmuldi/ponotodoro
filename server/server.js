@@ -38,9 +38,6 @@ app.get("/api", (req, res) => {
     res.json( {"fruits" : ["apple", "orange", "banana"]} );
 });
 
-app.use("/", (req, res) => {
-    res.send("Server is running.");
-});
 
 app.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
