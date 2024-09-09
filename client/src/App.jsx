@@ -39,9 +39,13 @@ function App() {
   };
   
   function delNote(id) {
-    setListNotes((prev) => {
-      return prev.filter( (note, index) => {return index !== id} )
-    })
+    if (user) {
+      // If user is logged in, delete by the note's database ID
+      setListNotes((prev) => prev.filter(note => note.id !== id));
+    } else {
+      // If user is not logged in, delete by the index
+      setListNotes((prev) => prev.filter((note, index) => index !== id));
+    }
   }
 
   const getNotes = async () => {
@@ -74,9 +78,9 @@ function App() {
   //   else { }
   // }, [user]); 
 
-  // useEffect(() => {
-  //   console.log(listNotes);
-  // }, [listNotes])
+  useEffect(() => {
+    console.log(listNotes);
+  }, [listNotes])
 
   // const fetchApi = async () => {
   //   const response = await axios.get(import.meta.env.VITE_BACKEND_ADDRESS + "api"); 
@@ -128,9 +132,10 @@ function App() {
                 <div className="container-fluid mb-3">
                   <div className="row justify-content-center g-4">
                   {listNotes.map((note, index) => {
+                    const noteId = user ? note.id : index;
                     return (
                       <div className="col-12 col-sm-6 col-md-4 d-flex justify-content-center" key={index}>
-                        <Note title={note.title || note.note_title} content={note.content || note.note_content} id={index} onDel={delNote} />
+                        <Note title={note.title || note.note_title} content={note.content || note.note_content} id={noteId} onDel={delNote} />
                       </div>
                     );
                   })}

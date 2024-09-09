@@ -153,6 +153,22 @@ app.post("/get-notes", async (req, res) => {
 
 });
 
+app.post("/delete-note", async (req, res) => { 
+    const { noteId, userId } = req.body;
+
+    try {
+        const result = await db.query("DELETE FROM notes WHERE id = $1 AND user_id = $2 RETURNING *", [noteId, userId]);
+        if (result.rows.length > 0) {
+            res.status(200).json({ message: "Note deleted successfully.", success: true });
+        } else {
+            res.json({ message: "Note not found or unauthorized.", success: false });
+        }
+    } catch(err) {
+        console.error("Error deleting note:", err);
+        res.json({ message: "Server error. Failed to delete the note.", success: false });
+    }
+});
+
 
 app.listen(port, () => {
     console.log("Server running on port " + port);

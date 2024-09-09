@@ -2,18 +2,46 @@ import { useState, useEffect, useContext } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
 function Note(props) {
     const [clickedItem, setClickedItem] = useState(null);
 
     const { user, register, login, logout } = useContext(AuthContext);
 
-    const handleItemClick = (index) => {
-        setClickedItem(index); 
+    const handleItemClick = () => {
+        setClickedItem(props.id);
         setTimeout(() => {
-            props.onDel(index); 
+            handleDeleteNote();
             setClickedItem(null);
         }, 750);
+    };
+
+    const handleDeleteNote = async () => {
+        if (user) {
+            try {
+                console.log(props.id);
+                console.log(user.id);
+                const response = await axios.post(`${import.meta.env.VITE_BACKEND_ADDRESS}delete-note`, {
+                    noteId: props.id, // Pass the note's ID
+                    userId: user.id   // Pass the user's ID
+                }, {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+    
+                if (response.data.success) {
+                    props.onDel(props.id); // Trigger the deletion from the state in App component
+                } else {
+                    console.log(response.data.message);
+                }
+            } catch (error) {
+                console.error("Error deleting note:", error);
+            }
+        }
+        else {
+            props.onDel(props.id);
+        }
+        
     };
 
     return (
