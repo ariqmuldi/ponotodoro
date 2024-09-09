@@ -90,7 +90,6 @@ function CreateNote(props) {
                     </Fab>
                 </Zoom>
             </form>
-
         </div>
     );
 }
