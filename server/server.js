@@ -7,7 +7,7 @@ import passport from "passport";
 import session from "express-session";
 
 const app = express();
-env.config({ path: '../client/.env' });
+env.config({ path: './.env' });
 
 const corsOptions = { origin : [process.env.VITE_ADDRESS], credentials: true} // Port Vite servers run on
 app.use(cors(corsOptions))
