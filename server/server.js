@@ -17,6 +17,14 @@ app.use(express.json());
 
 const saltRounds = 10;
 
+app.use("/", (req, res, next) => {
+    if (req.originalUrl === "/") {
+        res.send("Server is running");
+    } else {
+        next(); // Pass control to the next matching route handler
+    }
+});
+
 app.use(
     session({
       secret: process.env.SESSION_SECRET,
